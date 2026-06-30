@@ -1,0 +1,44 @@
+name: New Purchase Request
+description: Request a new item be purchased and added to inventory
+title: "[Purchase] "
+labels: ["pending-approval", "purchase-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill this out to request a new purchase. A certified admin must approve it
+        (by adding the `approved` label) before it's logged to the spreadsheet.
+
+  - type: input
+    id: item-name
+    attributes:
+      label: Item Name
+      placeholder: e.g. Soldering iron
+    validations:
+      required: true
+
+  - type: input
+    id: unit-price
+    attributes:
+      label: Price per Unit (USD)
+      description: Numbers only, e.g. 12.99
+      placeholder: "12.99"
+    validations:
+      required: true
+
+  - type: input
+    id: quantity
+    attributes:
+      label: Quantity
+      description: Whole number of units
+      placeholder: "3"
+    validations:
+      required: true
+
+  - type: input
+    id: link
+    attributes:
+      label: Link to Item
+      placeholder: https://...
+    validations:
+      required: true

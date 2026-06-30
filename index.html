@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Purchase Request</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #171a21;
+    --border: #2a2f3a;
+    --text: #e8eaed;
+    --muted: #9aa3b2;
+    --accent: #4f8cff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 48px 16px;
+  }
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  p.sub { color: var(--muted); margin: 0 0 24px; font-size: 0.9rem; }
+  label { display: block; font-size: 0.85rem; margin: 16px 0 6px; color: var(--muted); }
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #0f1115;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: var(--accent); }
+  button {
+    margin-top: 24px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.92; }
+  .note {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>New Purchase Request</h1>
+    <p class="sub">Submitting opens a ticket (GitHub issue) for admin approval. You'll need to be signed in to GitHub.</p>
+
+    <form id="purchase-form">
+      <label for="item-name">Item name</label>
+      <input id="item-name" required placeholder="e.g. Soldering iron" />
+
+      <label for="unit-price">Price per unit (USD)</label>
+      <input id="unit-price" required type="number" min="0" step="0.01" placeholder="12.99" />
+
+      <label for="quantity">Quantity</label>
+      <input id="quantity" required type="number" min="1" step="1" placeholder="3" />
+
+      <label for="link">Link to item</label>
+      <input id="link" required type="url" placeholder="https://..." />
+
+      <button type="submit">Submit for approval</button>
+    </form>
+
+    <p class="note">
+      This redirects to a pre-filled GitHub issue. Submitting the issue there
+      creates the open ticket; a certified admin approves it from GitHub by
+      adding the <code>approved</code> label, which logs it to the spreadsheet automatically.
+    </p>
+  </div>
+
+<script>
+  // TODO: set this to your repo, e.g. "myusername/inventory-tracker"
+  const REPO = "OWNER/REPO";
+
+  document.getElementById("purchase-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const itemName = document.getElementById("item-name").value.trim();
+    const unitPrice = document.getElementById("unit-price").value.trim();
+    const quantity = document.getElementById("quantity").value.trim();
+    const link = document.getElementById("link").value.trim();
+
+    const params = new URLSearchParams({
+      template: "new-purchase.yml",
+      title: `[Purchase] ${itemName}`,
+      "item-name": itemName,
+      "unit-price": unitPrice,
+      "quantity": quantity,
+      "link": link,
+    });
+
+    window.location.href = `https://github.com/${REPO}/issues/new?${params.toString()}`;
+  });
+</script>
+</body>
+</html>
