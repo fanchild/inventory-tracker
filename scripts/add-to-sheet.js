@@ -102,6 +102,7 @@ async function main() {
   }
 
   const itemName = extractField(ISSUE_BODY, "Item Name");
+  const category = extractField(ISSUE_BODY, "Category");
   const unitPriceRaw = extractField(ISSUE_BODY, "Price per Unit \\(USD\\)");
   const quantityRaw = extractField(ISSUE_BODY, "Quantity");
   const link = extractField(ISSUE_BODY, "Link to Item");
@@ -123,7 +124,7 @@ async function main() {
   const total = (unitPrice * quantity).toFixed(2);
   const date = new Date().toISOString().slice(0, 10);
 
-  const row = [date, itemName, unitPrice.toFixed(2), quantity, total, link, ISSUE_AUTHOR, ACTOR];
+  const row = [date, itemName, category, unitPrice.toFixed(2), quantity, total, link, ISSUE_AUTHOR, ACTOR];
   await appendToSheet(row);
 
   await closeIssueAsCompleted(
