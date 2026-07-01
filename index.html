@@ -71,8 +71,19 @@
     <p class="sub">Submitting opens a ticket (GitHub issue) for admin approval. You'll need to be signed in to GitHub.</p>
 
     <form id="purchase-form">
-      <label for="item-name">Item name</label>
+      <label for="item-name">Item Name</label>
       <input id="item-name" required placeholder="e.g. Soldering iron" />
+
+      <label for="category">Category</label>
+      <select id="category" required>
+        <option value="" disabled selected>Select a Category</option>
+        <option>Airframe</option>
+        <option>Avionics</option>
+        <option>Recovery</option>
+        <option>Logistics</option>
+        <option>Tools/Workshop</option>
+        <option>Other</option>
+      </select>
 
       <label for="unit-price">Price per unit (USD)</label>
       <input id="unit-price" required type="number" min="0" step="0.01" placeholder="12.99" />
@@ -101,6 +112,7 @@
     e.preventDefault();
 
     const itemName = document.getElementById("item-name").value.trim();
+    const category = document.getElementById("category").value.trim();
     const unitPrice = document.getElementById("unit-price").value.trim();
     const quantity = document.getElementById("quantity").value.trim();
     const link = document.getElementById("link").value.trim();
@@ -109,6 +121,7 @@
       template: "new-purchase.yml",
       title: `[Purchase] ${itemName}`,
       "item-name": itemName,
+      "subteam": subteam,
       "unit-price": unitPrice,
       "quantity": quantity,
       "link": link,
