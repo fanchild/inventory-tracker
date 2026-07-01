@@ -17,6 +17,21 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What category does this item fall under?
+      options:
+        - Airframe
+        - Avionics
+        - Recovery
+        - Logistics
+        - Tools/Workshop
+        - Other
+    validations:
+      required: true
+      
   - type: input
     id: unit-price
     attributes:
